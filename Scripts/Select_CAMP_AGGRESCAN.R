@@ -1,0 +1,12 @@
+data<-read.csv("aap_1558286944.txt.xls", sep = "\t", header = T)
+library(tidyr)
+tr<-gather(data[9, -1])
+#library(dplyr)
+good<-tr %>% filter(value > -40 & value < 60)
+camp<-read.table("19_CAMP")
+amp<-camp %>% filter(V2 == "AMP") %>% select(V1)
+#library(seqinr)
+fst<-read.fasta("CAMP_86_19")
+predict_camp<-data.frame(key = names(fst)[amp$V1],stringsAsFactors = F)
+predict_final<-inner_join(predict_camp, good)[1]
+write.table(x = predict_final, file = "CAMP_AG_19", row.names=F,col.names=F,sep="\t")

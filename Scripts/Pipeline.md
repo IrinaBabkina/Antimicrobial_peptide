@@ -29,6 +29,12 @@ python /media/secondary/apps/busco/scripts/generate_plot.py -wd BUSCO_summaries/
 
 /media/secondary/apps/diamond_old blastx --threads 6 --db /media/main/databases/nrd.dmnd --out /media/main/sandbox/irina_IB/1_quality/E_verr/D_out_SRR68_100 --sensitive --query /media/main/sandbox/irina_IB/1_quality/E_verr/T_out_SRR68_100.fasta --max-target-seqs 1 --taxonmap /media/main/databases/prot.accession2taxid.gz -f 6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids stitle salltitles
 
+### TransDecoder for protein prediction
+
+TransDecoder.LongOrfs -t T_out_SRR68_100.fasta -m 30
+
+TransDecoder.Predict -t T_out_SRR68_100.fasta
+
 ## Crustin analysis
 
 Crustin analysis was performed using BLAST NCBI and local blastp. Alignment was carried out in the program seaview (algorithm ClustalW). The classification tree was built by PhyML method. 
