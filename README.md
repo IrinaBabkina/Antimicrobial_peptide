@@ -47,7 +47,7 @@ We used raw transctiptome data from [Naumenko et al., 2017][5]
 Transcriptome assembly was performed using Trinity (version 2.8.4) with default parameters (except -min_len, which was equal to 100). The assembly quality was estimated by the BUSCO program (version 1.2) with the *arthropoda_db9* database. The obtained nucleotide contigs were translated into protein sequences using the  TransDecoder program (version 5.5.0) with default parameters. Further analysis was performed using protein sequences.
 
 ### Known AMP analysis
-To search for known AMP, we performed a blastp search on the database [db_AMP][6] with default parameters (except --sensitive and --max-target-seqs 1). The contigs, annotated as "crustin", were selected for further individual analysis. The crustin classification tree was constructed (PhyML) and visualized with R (package grep v 2.8.4).
+To search for known AMP, we performed a blastp search on the database [db_AMP][6] with default parameters (except --sensitive and --max-target-seqs 1). The contigs, annotated as "crustin", were selected for further individual analysis. The crustin classification tree was constructed (PhyML) and visualized with R (package ggtree v 2.8.4).
 
 To search for homologous sequences of crustins within the published amphipod transcriptomes, we conducted a blast-search of the initial nucleotide sequences found in the TSA database (taxon = amphipoda).
 
@@ -71,7 +71,7 @@ The developed pipeline is based on this article [Kim et al., 2016][7]
 [8]: http://www.camp.bicnirrh.res.in/index.php
 [9]: http://bioinf.uab.es/aggrescan/
 
-## Результаты
+## Results
 
 During the work 4 transcriptomes of gammarids from different phylogenetic branches were assembled. Two of them, according to BUSCO, were of excellent quality (red arrows), and two were of medium quality (blue arrows).
 
