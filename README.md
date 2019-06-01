@@ -1,29 +1,30 @@
-# Предсказание антимикробных пептидов с помощью данных транскриптома немодельного вида.
+# Antimicrobial peptide prediction in non-model species based on transcriptome data.
 
-## Описание проекта
+## Project description
 
-Озеро Байкал обладает уникальной глубоководной пресноводной фауной. В том числе обильны представители амфипод, обитающие в широком спектре экологических условий: от литоральной зоны, до максимальных глубин. Основной рацион глубоководных представителей составляет падаль со специфической сапротрофной микробиотой. Предполагается, что глубоководные рачки будут иметь разнообразные механизмы защиты от патогенных микроорганизмов, в том числе и антимикробные пептиды.  
+Lake Baikal hosts a unique deep-water freshwater fauna, which includes various representatives species living in a wide range of environmental conditions, from the littoral zone to the maximum depths. The main diet of deep-sea representatives is carrion with a specific saprotrophic microbiota. Thus, the deep-sea crustaceans are assumed to have a variety of protection mechanisms against pathogens, including antimicrobial peptides.
 
-Антимикробные пептиды (АМП) - это общее название для ряда групп пептидов производимых организмом, и объединяемых на основе способности подавлять развитие микроорганизмов. На данный момент известно порядка 11000 АМП как животного, так и растительного происхождения. Большинство групп АМП не имеют филогенетического родства и различаются по механизмам действия, что делает выявление их общих черт непростой задачей. В большинстве случаев АМП представляют собой заряженные катионные полимеры длиной до 100 ак (в среднем 40-50) со склонностью к агрегации in vivo, но стабильные во внешней среде. 
+Antimicrobial peptides (AMPs) are a common name for several groups of peptides produced by the organisms sharing the ability to inhibit the development of microorganisms. At the moment, about 11,000 AMP of either animal and plant origin are known. Most AMP groups are not phylogenetically related and have different mechanisms of action, which makes identifying their similarities an uneasy task. In most cases, AMP are charged cationic polymers up to 100 aa (average 40-50) with a tendency to aggregation in vivo but stable in the external environment.
 
-Транскриптомные данные - один из источников косвенной информации о синтезируемых белках организма, который можно использовать в том числе и для анализа АМП. В работе [Kim et al., 2016][7] разработан пайплайн для поиска АМП в транскриптомах тараканов. Однако специфика наших данных и расширение зоны интереса также на криптические АМП требует его доработки. 
+RNA-seq data can be used to generate proteome prediction, and thus they can also be used to search for AMPs. [Kim et al., 2016][7] developed a pipeline to search for AMP in cockroach transcripts. However, the specifics of our data and the expansion of the zone of interest also to the cryptic AMPS require its improvement.
 
-## Цели и задачи
+## Goals and objectives
 
-Цель:
-Предсказание и характеристика спектра антимикробных пептидов (АМП) у глубоководных амфипод в сравнении с литоральными.
+Aim:
 
-Задачи: 
+Prediction and characterization of the spectrum of antimicrobial peptides (AMP) in deep-sea amphipods in comparison with littoral ones.
 
-1) Сравнение двух видов гаммарусов (*Ommatogammarus flavus*  и  *Eulimnogammarus verrucosus*) по составу и уровню экспрессии АМП
-2) Поиск известных АМП  и их последующий анализ
-3) Поиск неизвестных (новых) АМП 
-    * Разработка алгоритма для поиска пептидов с потенциальными антимикробными свойствами в данных транскриптома
-    * Реализация алгоритма в виде единого пайплайна
+Tasks: 
 
-## Данные
+1) Compare the repertoires and expression levels of AMPs in two species, *Ommatogammarus flavus* and *Eulimnogammarus verrucosus*
+2) Find known AMP and characterize them
+3) Find unknown AMP 
+    * Develop a search algoritm for peptides with potential antimicrobial properties based on  transcriptome data
+    * Implement the algorithm as a single pipeline
 
-Транскриптомные данные, использованные в работе, были взяты из статьи [Naumenko et al., 2017][5]
+## Data
+
+We used raw transctiptome data from [Naumenko et al., 2017][5]
 
 [5]: https://www.ncbi.nlm.nih.gov/pubmed/27859915
 
@@ -40,60 +41,60 @@
 [3]: https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR3467101
 [4]: https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR3467081
 
-## Методы
+## Methods
 
-### Предобработка данных
-Сборка транскриптомов проводилась с помощью программы Trinity (version 2.8.4) с параметрами по умолчанию (кроме -min_len, который был равен 100). Качество сборки оценивалось программой BUSCO (verion 1.2) по базе *arthropoda_odb9*. Полученные нуклеотидные контиги были транслированы в белковые последовательности с помощью программы TransDecoder (version 5.5.0) с параметрами по умолчанию. Дальнейший анализ проводили используя белковые последовательности. 
+### Data pre-processing
+Transcriptome assembly was performed using Trinity (version 2.8.4) with default parameters (except -min_len, which was equal to 100). The assembly quality was estimated by the BUSCO program (version 1.2) with the *arthropoda_db9* database. The obtained nucleotide contigs were translated into protein sequences using the  TransDecoder program (version 5.5.0) with default parameters. Further analysis was performed using protein sequences.
 
-### Поиск и анализ известных АМП
-Для поиска известных АМП проводили blastp-поиск по базе данных [db_AMP][6] с параметрами по умолчанию (кроме --sensitive и --max-target-seqs 1). Контиги, аннотированные как "crustin", были отобраны для дальнейшего индивидуального анализа. Было построено классификационное дерево крустинов (PhyML) и визуализировано в R (package ggtree v2.8.4).
+### Known AMP analysis
+To search for known AMP, we performed a blastp search on the database [db_AMP][6] with default parameters (except --sensitive and --max-target-seqs 1). The contigs, annotated as "crustin", were selected for further individual analysis. The crustin classification tree was constructed (PhyML) and visualized with R (package grep v 2.8.4).
 
-Для поиска гомологичных последовательностей среди опубликованных транскриптомов амфипод проводили blast-поиск исходных нуклеотидных сиквенсов найденных крустинов по базе данных TSA (taxon = amphipoda).
+To search for homologous sequences of crustins within the published amphipod transcriptomes, we conducted a blast-search of the initial nucleotide sequences found in the TSA database (taxon = amphipoda).
 
 [6]: http://140.138.77.240/~dbamp/introduction.php
 
-### Разработка пайплайна для предсказания новых АМП
+### Pipeline development
 
-Разработанный пайплайн опирается на данные статьи [Kim et al., 2016][7] De Novo Transcriptome Analysis and Detection of Antimicrobial Peptides of the American Cockroach *Periplaneta americana* (Linnaeus)
+The developed pipeline is based on this article [Kim et al., 2016][7]
 
 [7]: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155304
 
 
-1. Для поиска АМП исходные белковые последовательности были нарезаны на участки длиной 50 аминокислот с шагом в 5 аминокислот (cut_fasta.py)
-2. Для полученных "пептидов" были определены основные физико-химические свойства с помощью программы PEPSTAT (EMBOSS:6.6.0.0). 
-3. Способность к аггрегации и вероятные вторичные структуры были оценены программами Tango (version 2.3 ) и [AGGRESCAN][9].
-4. Для непосредственного предсказания антимикробных свойств использовались алгоритмы базы данных [CAMP][8] (а именно random forest) и программа AMPA (version 19.01.0.5050). 
-5. PEST-мотивы в "пептидах" определялись программой Epestfind (EMBOSS:6.6.0.0).
+1. The initial protein sequences are cut into chunks of 50 amino acids with a 5-aa sliding window (cut_fasta.py)
+2. The physico-chemical properties of the predicted peptides are calculated with PEPSTAT (EMBOSS:6.6.0.0). 
+3. Aggregation properties and probable secondary structures are predicted with Tango (version 2.3 ) and [AGGRESCAN][9].
+4. Prediction of antimicrobial properties is performed with the [CAMP][8] database (random forest) and the AMPA program (version 19.01.0.5050). 
+5. PEST motifs in the predicted peptides are identified with the Epestfind script (EMBOSS:6.6.0.0).
 
-![](https://github.com/IrinaBabkina/Antimicrobial_peptide/blob/production/Result/Pipeline.png?raw=true)
+![](https://github.com/IrinaBabkina/Antimicrobial_peptide/blob/production/Result/Pipeline_eng.png?raw=true)
 
 [8]: http://www.camp.bicnirrh.res.in/index.php
 [9]: http://bioinf.uab.es/aggrescan/
 
 ## Результаты
 
-В ходе работы были собраны 4 транскриптома гаммарусов из разных филогенетических ветвей. Два из которых по результатам BUSCO отличного качества (красные стрелки), а два - среднего (синие стрелки). 
+During the work 4 transcriptomes of gammarids from different phylogenetic branches were assembled. Two of them, according to BUSCO, were of excellent quality (red arrows), and two were of medium quality (blue arrows).
 
 ![](https://github.com/IrinaBabkina/Antimicrobial_peptide/blob/production/Result/Transcriptome_assembly.png?raw=true)
 
-### Крустины 
+### Crustins
 
-На данный момент нет опубликованных сведений о крустинах амфипод. В транскриптомах 2 видов: *Ommatogammarus flavus*  и  *Eulimnogammarus verrucosus* удалось обнаружить 4 группы белков, сходных по структуре с крустинами Decapoda. Еще у 2 видов: *Poekilogammarus pictoides* и *Micruropus parvulus* удалось обнаружить только 3 группы крустинов. Однако отсутствие 4 группы - это результат ошибок сборки транскриптомов конкретных представителей, а не свойство филл. Так как поиск по TSA выявил гомологичные группе Е сиквенсы среди других представителей этих ветвей гаммарусов. 
+At the moment there is no published information about the crustins of amphipods. In transcripts of 2 species, *Ommatogammarus flavus* and *Eulimnogammarus verrucosus*, 4 groups of proteins similar in structure to Decapoda crustins were found. In the other two 2 species, *Poekilogammarus pictoides* and *Micruropus parvulus*, we managed to find only 3 crustin groups. However, the lack of the 4th group is the result of assemble errors of the transcriptome of specific representatives, and not the property of the particular genera, since the search in TSA revealed homologous group E sequences among other representatives of these branches of gammarus. 
 
 ![](https://github.com/IrinaBabkina/Antimicrobial_peptide/blob/production/Result/Crustin_tree.png?raw=true)
 
-### Предсказанные АМП
+### Predicted AMP
 
-Отработка пайплайна проводилась на данных транскриптома *Ommatogammarus flavus*.
+Pipeline testing was conducted on the data of the transcriptome *Ommatogammarus flavus*.
 
-Для 916 полученных "пептидов" была проведена перекрестная проверка антимикробных свойств с помощью алгоритмов базы данных db_AMP, которая не использовалась в ходе папйплайна. По итогу 91% "пептидов" был оценен алгоритмом как "антимикробный", что говорит о хорошем качестве отбора. 
+For the 916 predicted peptides returned by the pipeline, we performed independent validation of their antimicrobial properties with the algorithms of the db_AMP database, which was not used in our pipeline. As a result, 91% of "peptides" was evaluated by the algorithm as antimicrobial, which indicates a good quality of selection. 
 
-![](https://github.com/IrinaBabkina/Antimicrobial_peptide/blob/production/Result/Reduction_data.png?raw=true)
+![](https://github.com/IrinaBabkina/Antimicrobial_peptide/blob/production/Result/Reduction_data_eng.png?raw=true)
 
-## Выводы
+## Summary
 
-1) В ходе работы были найдены последовательности, классифицированные нами как крустины амфипод.
-2) В исследованных нами транскриптомах из разных филогенетических ветвей гаммарусов нам удалось выявить 4 стабильные группы крустинов. Также имеется предварительная информация о наличии крустинов среди остальных представителей.
-3) Был разработан и частично реализован пайплайн для поиска АМП в транскриптомных данных.
+1) We found sequences similar to the crustin family of AMP. 
+2) In the transcripts from different phylogenetic branches of the gammarids we studied, we were able to identify 4 stable groups of crustins. There is also preliminary information on the presence of crustins among other species.
+3) We developed and partially implemented a pipeline to search for AMP in transcriptome data.
 
  
