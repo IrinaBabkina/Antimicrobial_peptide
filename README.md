@@ -73,7 +73,7 @@ The developed pipeline is based on this article [Kim et al., 2016][7]
 
 ## Results
 
-During the work 4 transcriptomes of gammarids from different phylogenetic branches were assembled. Two of them, according to BUSCO, were of excellent quality (red arrows), and two were of medium quality (blue arrows).
+During the work 4 transcriptomes of gammarids from different phylogenetic branches were assembled. Two of them, according to BUSCO, were of excellent quality (blue arrows), and two were of medium quality (red arrows).
 
 ![](https://github.com/IrinaBabkina/Antimicrobial_peptide/blob/production/Result/Transcriptome_assembly.png?raw=true)
 
