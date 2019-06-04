@@ -1,7 +1,7 @@
 # Technical information
 ## Transcriptome Assembly
 ### Data pre-processing
-```sh
+```shell
 wget ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR346/SRR3467068/SRR3467068.sra
 
 fastq-dump -I --split-files SRR3467068.sra  
@@ -14,6 +14,7 @@ gunzip -c SRR3467068.interleaved.fastq.gz | \
   paste - - - - - - - - | \
   tee >(cut -f 1-4 | tr '\t' '\n' | gzip > SRR3467068_1.fastq.gz) | \
   cut -f 5-8 | tr '\t' '\n' | gzip -c > SRR3467068_2.fastq.gz
+  
 ```
 ### Trinity assembling
 ```sh
